@@ -1,0 +1,22 @@
+{
+    "name": "atlas-agent-economy",
+    "version": "1.0.0",
+    "description": "A.T.L.A.S. - Autonomous Task Learning and Assistance System — Agent Economy on Sepolia",
+    "type": "module",
+    "scripts": {
+        "provider": "tsx provider-agent/provider.ts",
+        "client": "tsx client-agent/client.ts",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@tetherto/wdk": "^1.0.0-beta.6",
+        "@tetherto/wdk-wallet-evm": "^1.0.0-beta.8",
+        "@tetherto/wdk-wallet-evm-erc-4337": "^1.0.0-beta.5",
+        "dotenv": "^16.4.5"
+    },
+    "devDependencies": {
+        "@types/node": "^20.14.0",
+        "tsx": "^4.19.2",
+        "typescript": "^5.4.5"
+    }
+}
