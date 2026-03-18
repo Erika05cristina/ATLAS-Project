@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "wdk": {
+      "source": "tetherto/wdk-agent-skills",
+      "sourceType": "github",
+      "computedHash": "b0301cbc74064ad02df45d847d77e0b35947615fb8091d2ab96751b8646c782e"
+    }
+  }
+}

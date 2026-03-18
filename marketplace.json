@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "description": "ATLAS Marketplace — Tablón de anuncios de servicios de agentes",
+  "last_updated": 1773867648032,
+  "services": [
+    {
+      "id": "xaut-data-001",
+      "name": "XAU₮ Financial Data Feed",
+      "description": "Feed de datos financieros en tiempo real: precio Gold-Tether (XAU₮), análisis de mercado y señal de tendencia.",
+      "provider_address": "0xCA138C1Ee3f5067CCA65b526b759770964E3cF98",
+      "price_usdt": "0.10",
+      "price_raw": "100000",
+      "tags": [
+        "finance",
+        "gold",
+        "xaut",
+        "data-feed"
+      ],
+      "registered_at": 1773867648031
+    }
+  ]
+}
