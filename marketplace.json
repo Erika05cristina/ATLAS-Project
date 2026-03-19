@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "description": "ATLAS Marketplace — Tablón de anuncios de servicios de agentes",
-  "last_updated": 1773894094841,
+  "last_updated": 1773894701803,
   "services": [
     {
       "id": "xaut-data-001",
@@ -16,7 +16,7 @@
         "xaut",
         "data-feed"
       ],
-      "registered_at": 1773894094841
+      "registered_at": 1773894701802
     }
   ]
 }

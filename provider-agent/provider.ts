@@ -82,13 +82,26 @@ function registerService(wallet: AtlasWallet, address: string, usdtAddress: stri
         registered_at: Date.now(),
     };
 
+    // Servicio Estafa / Sobreprecio para Obligar al LLM a Arbitrar Precios Inteligentemente
+    const badService: ServiceListing = {
+        id: "xaut-premium-002",
+        name: "PREMIUM XAU₮ Fast Data Feed",
+        description: "Datos financieros presuntamente idénticos del oro XAU₮ pero con latencia reducida. Creado como señuelo.",
+        provider_address: address,
+        price_usdt: "0.80",
+        price_raw: "800000", // 0.80 USDt (excede el presupuesto de la IA por mucho)
+        tags: ["finance", "gold", "scam", "premium"],
+        registered_at: Date.now(),
+    };
+
     // Reemplazar si ya existe, o agregar
-    const idx = marketplace.services.findIndex((s) => s.id === SERVICE_ID);
-    if (idx >= 0) {
-        marketplace.services[idx] = myService;
-    } else {
-        marketplace.services.push(myService);
-    }
+    const idx1 = marketplace.services.findIndex((s) => s.id === SERVICE_ID);
+    if (idx1 >= 0) marketplace.services[idx1] = myService;
+    else marketplace.services.push(myService);
+
+    const idx2 = marketplace.services.findIndex((s) => s.id === badService.id);
+    if (idx2 >= 0) marketplace.services[idx2] = badService;
+    else marketplace.services.push(badService);
 
     marketplace.last_updated = Date.now();
 

@@ -34,12 +34,18 @@ export class OpenAIFinancialAgent {
     });
   }
 
-  // ==== WEBSOCKET LOGGER ====
+  // ==== WEBSOCKET & FILE LOGGER (ENTERPRISE AUDIT) ====
   public log(text: string, type: 'thought' | 'action' | 'observation' | 'system' | 'error' | 'success' = 'system') {
+    const timestamp = new Date().toISOString();
     console.log(text);
+    
     if (this.io) {
       this.io.emit("agent_log", { text, type, timestamp: Date.now() });
     }
+
+    // Escribir el pensamiento irreversible (Audit Trail de la IA)
+    const logLine = `[${timestamp}] [${type.toUpperCase()}] ${text.replace(/\n, " "/g, "")}\n`;
+    fs.appendFileSync("audit_trail_log.txt", logLine, "utf-8");
   }
 
   async initialize() {
@@ -154,6 +160,14 @@ export class OpenAIFinancialAgent {
             const amountRaw = BigInt(args.amount_raw);
             const balanceRaw = await this.wallet.getUsdtBalanceRaw(args.token_address);
             
+            // 🔥 IA SAFETY GUARDRAIL: Limite máximo de gasto por transacción (0.50 USDt)
+            const maxSpendLimitRaw = BigInt(500000); // 0.50 USDt en formato crudo (6 decimales)
+            
+            if (amountRaw > maxSpendLimitRaw) {
+                this.log(`🛡️ [GUARDRAIL ACTIVADO]: La IA intentó gastar ${this.wallet.formatUsdt(amountRaw)} USDt, excediendo el límite de seguridad de 0.50 USDt.`, 'error');
+                return JSON.stringify({ error: "🚨 GUARDRAIL DE SEGURIDAD BLOCKCHAIN: Transacción rechazada. La factura excede el presupuesto máximo tolerado de 0.50 USDt para transacciones autónomas." });
+            }
+
             if (balanceRaw < amountRaw) {
                 return JSON.stringify({ error: `Saldo insuficiente. Tienes ${this.wallet.formatUsdt(balanceRaw)} USDt, pero la factura es de ${this.wallet.formatUsdt(amountRaw)} USDt.` });
             }
