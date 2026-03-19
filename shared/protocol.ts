@@ -49,6 +49,8 @@ export interface InvoiceRequest {
 export interface Invoice {
     service_id: string;
     provider_address: string;
+    /** Dirección del cliente a quien va dirigida la factura */
+    client_address: string;
     /** Monto exacto en unidades base del token */
     amount_raw: string;
     /** Dirección del contrato del token de pago */

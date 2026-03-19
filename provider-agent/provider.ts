@@ -123,6 +123,7 @@ async function waitForInvoiceRequest(providerAddress: string, usdtAddress: strin
     const invoice: Invoice = {
         service_id: request.service_id,
         provider_address: providerAddress,
+        client_address: request.client_address,
         amount_raw: SERVICE_PRICE_RAW,
         token_address: usdtAddress,
         expires_at: Date.now() + INVOICE_VALIDITY_MS,
@@ -242,23 +243,31 @@ async function main(): Promise<void> {
         console.log(`  💵 Balance USDt:    ${usdtBalance}`);
         console.log("──────────────────────────────────────────────────────");
 
-        // ── FASE 1: Registro ──────────────────────────────────────
-        registerService(wallet, address, usdtAddress);
+        // El Proveedor será un servidor continuo que escucha infinitamente transacciones
+        while (true) {
+            try {
+                // ── FASE 1: Registro ──────────────────────────────────────
+                registerService(wallet, address, usdtAddress);
 
-        // ── FASE 2: Invoice ───────────────────────────────────────
-        await waitForInvoiceRequest(address, usdtAddress);
+                // ── FASE 2: Invoice ───────────────────────────────────────
+                await waitForInvoiceRequest(address, usdtAddress);
 
-        // ── FASE 3: Settlement ────────────────────────────────────
-        const settlement = await verifiyPayment(wallet);
+                // ── FASE 3: Settlement ────────────────────────────────────
+                const settlement = await verifiyPayment(wallet);
 
-        // ── FASE 4: Fulfillment ────────────────────────────────────
-        deliverService(settlement);
+                // ── FASE 4: Fulfillment ────────────────────────────────────
+                deliverService(settlement);
 
-        console.log("\n🎉 Ciclo de negociación A2A completado exitosamente.");
-
+                console.log("\n🎉 Ciclo A2A completado exitosamente. Volviendo a escuchar ventas...\n");
+            } catch (err: any) {
+                console.log(`\n⚠️ Transacción cancelada o Timeout: ${err.message}`);
+                console.log("Reiniciando escucha del Proveedor en 5 segundos...");
+                await sleep(5000);
+            }
+        }
     } catch (error: unknown) {
         const msg = error instanceof Error ? error.message : String(error);
-        console.error(`\n❌ ERROR FATAL: ${msg}`);
+        console.error(`\n❌ ERROR FATAL DEL SERVIDOR PROVEEDOR: ${msg}`);
         process.exit(1);
     } finally {
         wallet?.dispose();

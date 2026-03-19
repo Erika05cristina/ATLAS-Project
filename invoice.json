@@ -1,8 +1,0 @@
-{
-  "service_id": "xaut-data-001",
-  "provider_address": "0xCA138C1Ee3f5067CCA65b526b759770964E3cF98",
-  "amount_raw": "100000",
-  "token_address": "0xd077a400968890eacc75cdc901f0356c943e4fdb",
-  "expires_at": 1773868551050,
-  "timestamp": 1773867651050
-}
