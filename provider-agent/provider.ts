@@ -179,6 +179,29 @@ async function verifiyPayment(wallet: AtlasWallet): Promise<Settlement> {
     return settlement;
 }
 
+// ── FASE 3.5: SMART REVENUE SPLIT (Tesorería Autónoma) ────────
+
+async function distributeRoyalties(wallet: AtlasWallet, usdtAddress: string, amountRawStr: string): Promise<void> {
+    console.log("\n💸 FASE 3.5: SMART REVENUE SPLIT — Tesorería Corporativa Autónoma...");
+    
+    // El agente calcula el 10% de Regalías para "La Creadora del Proyecto (Erika)" o la DAO.
+    const totalRaw = BigInt(amountRawStr);
+    const taxRaw = totalRaw / 10n; // 10% matemático
+    
+    // Dirección ficticia o real del desarrollador para cobrar impuestos
+    const TREASURY_ADDRESS = "0x8888888888888888888888888888888888888888"; 
+    
+    console.log(`   El Agente destina el 10% de su venta (${wallet.formatUsdt(taxRaw)} USDt) como Regalías/Impuestos.`);
+    console.log(`   Firmando y enviando transacción ERC-4337 a Tesorería dest: ${TREASURY_ADDRESS}`);
+    
+    try {
+        const txHash = await wallet.sendUsdt(TREASURY_ADDRESS, taxRaw, usdtAddress);
+        console.log(`   [✅ IMPUESTOS TRANSFERIDOS ON-CHAIN]: Hash ${txHash}`);
+    } catch (e: any) {
+        console.log(`   [⚠️ AVISO DE TESORERÍA]: Fallo de red temporal al pagar impuesto: ${e.message}`);
+    }
+}
+
 // ── FASE 4: FULFILLMENT ───────────────────────────────────────
 
 function deliverService(settlement: Settlement): void {
@@ -267,6 +290,9 @@ async function main(): Promise<void> {
 
                 // ── FASE 3: Settlement ────────────────────────────────────
                 const settlement = await verifiyPayment(wallet);
+
+                // ── FASE 3.5: Smart Revenue Split (Comisiones a Creadores) ─
+                await distributeRoyalties(wallet, usdtAddress, SERVICE_PRICE_RAW);
 
                 // ── FASE 4: Fulfillment ────────────────────────────────────
                 deliverService(settlement);
