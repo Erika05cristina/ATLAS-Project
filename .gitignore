@@ -2,3 +2,4 @@
 node_modules/*
 .agent/*
 .agents/*
+audit_trail_log.txt
