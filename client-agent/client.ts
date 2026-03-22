@@ -120,6 +120,14 @@ export class OpenAIFinancialAgent {
             case "executeGaslessPayment":
                 try {
                     const amountRaw = BigInt(args.amount_raw);
+                    
+                    // 🛡️ AI SAFETY GUARDRAIL (Sincronizado con el Pitch)
+                    // Límite estricto de 0.50 USDt por seguridad autónoma
+                    if (amountRaw > 500000n) {
+                        this.log(`⚠️ [GUARDRAIL BLOCK]: Intento de gasto de ${amountRaw} excede límite de 0.50 USDt.`, 'error');
+                        throw new Error("Guardrail: Pago excede el límite de seguridad de 0.50 USDt.");
+                    }
+
                     const token = args.token_address || getUsdtAddress();
                     
                     this.log(`💸 [WDK] Firmando Transacción ERC-4337 a Sepolia...`, 'action');
@@ -129,7 +137,7 @@ export class OpenAIFinancialAgent {
                     this.log(`✅ [BLOCKCHAIN]: Pago enviado. Hash ${hash}`, 'success');
                     return JSON.stringify({ success: true, tx_hash: hash });
                 } catch (e: any) {
-                    this.log(`🚨 [FALLO BLOCKCHAIN]: ${e.message}`, 'error');
+                    this.log(`🚨 [ERROR TRANSACCIÓN]: ${e.message}`, 'error');
                     return JSON.stringify({ error: `On-chain fail: ${e.message}` });
                 }
 
