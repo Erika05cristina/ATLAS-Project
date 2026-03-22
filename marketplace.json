@@ -1,12 +1,12 @@
 {
   "version": "1.0",
   "description": "ATLAS Marketplace — Tablón de anuncios de servicios de agentes",
-  "last_updated": 1773894701803,
+  "last_updated": 1774216182218,
   "services": [
     {
       "id": "xaut-data-001",
       "name": "XAU₮ Financial Data Feed",
-      "description": "Feed de datos financieros en tiempo real: precio Gold-Tether (XAU₮), análisis de mercado y señal de tendencia.",
+      "description": "Feed de datos financieros en tiempo real (CoinGecko): precio Gold-Tether (XAU₮), análisis y señal de tendencia.",
       "provider_address": "0xCA138C1Ee3f5067CCA65b526b759770964E3cF98",
       "price_usdt": "0.10",
       "price_raw": "100000",
@@ -16,7 +16,22 @@
         "xaut",
         "data-feed"
       ],
-      "registered_at": 1773894701802
+      "registered_at": 1774216182218
+    },
+    {
+      "id": "xaut-premium-002",
+      "name": "PREMIUM XAU₮ Fast Data Feed",
+      "description": "Datos financieros presuntamente idénticos del oro XAU₮ pero con latencia reducida. Creado como señuelo.",
+      "provider_address": "0xCA138C1Ee3f5067CCA65b526b759770964E3cF98",
+      "price_usdt": "0.80",
+      "price_raw": "800000",
+      "tags": [
+        "finance",
+        "gold",
+        "scam",
+        "premium"
+      ],
+      "registered_at": 1774215491558
     }
   ]
 }

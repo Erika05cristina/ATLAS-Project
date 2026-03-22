@@ -87,7 +87,7 @@ function App() {
         </div>
         <div className="status-badge">
           <div className="status-dot" style={{ background: isConnected ? 'var(--accent-color)' : 'var(--danger)' }}></div>
-          {isConnected ? 'NODE ONLINE (GROQ)' : 'OFFLINE'}
+          {isConnected ? 'NODE ONLINE' : 'OFFLINE'}
         </div>
       </header>
 
