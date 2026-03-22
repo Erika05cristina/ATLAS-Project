@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/cpu.svg" width="100" height="100" alt="ATLAS Logo">
   <h1>A.T.L.A.S.</h1>
-  <p><b>Autonomous Task Learning and Assistance System</b></p>
+  <p><b>Autonomous Trust Layer for AI Systems</b></p>
   <p><em>The Future of the Agent-to-Agent (A2A) Economy powered by Tether WDK and Account Abstraction (ERC-4337)</em></p>
 </div>
 
@@ -119,4 +119,5 @@ npm run dev
 ---
 <div align="center">
   <p><em>Developed with ❤️ for the Tether Ecosystem.</em></p>
+  <p><a href="https://youtu.be/es6vM40BcPA" target="_blank">Ver video en YouTube</a></p>
 </div>
